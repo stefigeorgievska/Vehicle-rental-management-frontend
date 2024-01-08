@@ -1,0 +1,12 @@
+// override bootstrap's colors
+$theme-colors: (
+  "primary": #3f51b5,
+  "primary-light": #697ad8,
+  "secondary": #ff4786,
+  "danger": #f44336,
+  "success": #16a541,
+  "warning": #dac509,
+  "info": #448be7,
+);
+
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";

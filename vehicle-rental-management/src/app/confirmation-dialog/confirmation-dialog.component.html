@@ -1,0 +1,14 @@
+<mat-dialog-content class="text-center">
+
+  @if(isDelete){
+  <mat-icon color="warn" class="icon-display mb-4">warning</mat-icon>
+  }
+  <p>
+    {{message}}
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="center" class="d-flex justify-content-evenly">
+  <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1" class="btn" [ngClass]="{'btn-outline-danger' : isDelete, 'btn-outline-warning' :
+    !isDelete}">{{confirmButtonText}}</button>
+  <button mat-raised-button mat-dialog-close tabindex="-1" class="btn btn-outline-light">{{cancelButtonText}}</button>
+</mat-dialog-actions>

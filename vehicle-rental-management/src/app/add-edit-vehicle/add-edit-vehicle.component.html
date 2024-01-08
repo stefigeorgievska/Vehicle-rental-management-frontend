@@ -1,0 +1,70 @@
+<h3 mat-dialog-title class="mx-3">{{formTitle}}</h3>
+
+<form mat-dialog-content [formGroup]="addEditVehicleForm" class="vehicle-form">
+
+  <mat-form-field class="form-control">
+    <mat-label>Make</mat-label>
+    <input matInput formControlName="make" />
+
+    @if (addEditVehicleForm.controls.make.hasError('required')) {
+    <mat-error>Model is <strong>required</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="form-control">
+    <mat-label>Model</mat-label>
+    <input matInput formControlName="model" />
+
+    @if (addEditVehicleForm.controls.model.hasError('required')) {
+    <mat-error>Model is <strong>required</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="form-control">
+    <mat-label>Year</mat-label>
+    <input matInput type="number" formControlName="year" />
+
+    @if (addEditVehicleForm.controls.year.hasError('required')) {
+    <mat-error>Year is <strong>required</strong></mat-error>
+    }
+
+    @if (addEditVehicleForm.controls.year.hasError('min')) {
+    <mat-error>Minimum value is 1900</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="form-control">
+    <mat-label>Price</mat-label>
+    <input matInput type="number" formControlName="price" />
+
+    @if (addEditVehicleForm.controls.price.hasError('required')) {
+    <mat-error>Price is <strong>required</strong></mat-error>
+    }
+
+    @if (addEditVehicleForm.controls.price.hasError('min')) {
+    <mat-error>Please enter a positive amount</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="form-control">
+    <mat-label>Availability</mat-label>
+    <mat-select formControlName="availability" placeholder="Please select vehicle availability">
+      @for (availability of availabilityOptions; track availability) {
+      <mat-option [value]="availability.value">{{ availability.name }}</mat-option>
+      }
+    </mat-select>
+    @if (addEditVehicleForm.controls.availability.hasError('required')) {
+    <mat-error>Vehicle availability is <strong>required</strong></mat-error>
+    }
+  </mat-form-field>
+
+
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button mat-dialog-close cdkFocusInitial color="primary"
+      [disabled]="!data?.vehicle?.id && addEditVehicleForm.pristine || addEditVehicleForm.invalid"
+      (click)="onSaveClick()">Save</button>
+  </div>
+
+
+</form>

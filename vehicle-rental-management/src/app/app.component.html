@@ -1,0 +1,66 @@
+<div class="container">
+  <h1 class="text-primary">Vehicle Rental Management</h1>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <mat-form-field class="my-2 w-50">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filter by keyword..." #input />
+    </mat-form-field>
+
+    <button class="btn btn-primary d-flex align-items-center" (click)="onAddVehicle()">
+      <mat-icon>add</mat-icon>
+      Add New Vehicle
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+    class="mat-elevation-z8">
+    @for (column of columns; track column) {
+    <ng-container [matColumnDef]="column.columnDef">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ column.header }}
+      </th>
+      <td mat-cell *matCellDef="let vehicle">
+
+        @switch (column.columnDef) {
+
+        @case ('actions') {
+        <div>
+          <button matTooltip="Edit" (click)="onEditClick(vehicle)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button matTooltip="Delete" (click)="onDeleteClick(vehicle.id)">
+            <mat-icon class="text-danger">delete</mat-icon>
+          </button>
+        </div>
+        }
+
+        @case ('availability') {
+        <div class="d-flex align-items-center">
+          <mat-icon
+            [ngClass]="{'text-success' : vehicle.availability === 1, 'text-danger' : vehicle.availability === 0}">circle
+          </mat-icon>
+          @if(vehicle.availability === 1) {
+          <span> <i> (available)</i></span>
+          }
+          @else {
+          <span> <i> (not available) </i></span>
+          }
+        </div>
+        }
+
+        @default {
+        {{ column.cell(vehicle) }}
+        }
+        }
+
+      </td>
+    </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons aria-label="Select page of emails">
+  </mat-paginator>
